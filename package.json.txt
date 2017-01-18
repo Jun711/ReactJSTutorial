@@ -1,0 +1,44 @@
+{
+  "name": "reactjstutorial1",
+  "version": "1.0.0",
+  "description": "Some basic ReactJS",
+  "main": "index.js",
+  "scripts": {
+    // "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build", // similar to default npm keyword: npm start
+    "build": "webpack -d && cp src/index.html dist/index.html && webpack-dev-server --content-base src/ --inline --hot", 
+                          // this will execute webpack, will automatically call the config file
+                          //-d tells it to run in development mode
+                          // with webpack -d, we can transpile and bundle everything
+                          // default system command cp
+                          // webpack-dev-server --content-base src/ tells the server that our content
+                          // comes from the src folder
+                          // --port will set the port number other than the default 8080
+    "build:prod": "webpack -p && cp src/index.html dist/index.html" 
+    // in prod, we dont want to have source file, we will minimized everything
+    // -p will remove source map
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jun711/ReactJSTutorial.git"
+  },
+  "keywords": [
+    "reactjs"
+  ],
+  "author": "Jun Goh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jun711/ReactJSTutorial/issues"
+  },
+  "homepage": "https://github.com/Jun711/ReactJSTutorial#readme",
+  "dependencies": {
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
