@@ -9,6 +9,10 @@ class App extends React.Component {
 	// component has a lot built-in methods
 	// when reactjs thinks it needs to render a component
 	render() {
+		var user = {
+			name: "Anna",
+			hobbies: ["Sports", "Reading"]
+		};
 		return( // we can only return one root element, nested elements are fine, no sibling element
 			// it is not creating html code just like the following but it is telling ReactJS to sub Header
 			// with the imported component 
@@ -20,7 +24,9 @@ class App extends React.Component {
 			   	</div>
 			   	<div className="row">
                   	 <div className="col-xs-10 col-xs-offset-1">
-                  	 	<Home />           		
+                  	 	<Home name={"Max"} age={26} user={user}>
+                  	 		<p>This is a paragraph!</p>
+                  	 	</Home>           		
                    	</div>
 			   	</div>
 			   	<div className="row">
