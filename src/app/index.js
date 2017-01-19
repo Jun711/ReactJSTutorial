@@ -1,5 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
+
+import { Header } from "./components/Header";
+import { Home } from "./components/Home";
 console.log("It works!")
 
 class App extends React.Component {
@@ -7,8 +10,24 @@ class App extends React.Component {
 	// when reactjs thinks it needs to render a component
 	render() {
 		return( // we can only return one root element, nested elements are fine, no sibling element
-			<div>
-			   <h1>Hello!</h1>
+			// it is not creating html code just like the following but it is telling ReactJS to sub Header
+			// with the imported component 
+			<div className="container">
+			   	<div className="row">
+                  	 <div className="col-xs-10 col-xs-offset-1">
+                  	 	<Header />
+                   	</div>
+			   	</div>
+			   	<div className="row">
+                  	 <div className="col-xs-10 col-xs-offset-1">
+                  	 	<Home />           		
+                   	</div>
+			   	</div>
+			   	<div className="row">
+                  	 <div className="col-xs-10 col-xs-offset-1">
+                  	 	<h1>Hello!</h1>           		
+                   	</div>
+			   	</div>
 			</div>
 		);
 	}
