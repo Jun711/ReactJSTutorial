@@ -14,6 +14,11 @@ export class HomeEvent extends React.Component {
 				status: 1
 			});
 		},3000);
+		setTimeout(() => {
+			this.setState({
+				status: 0
+			});
+		},5000);
 		console.log("Constructor");
 	}
 	componentWillMount() {
@@ -28,6 +33,9 @@ export class HomeEvent extends React.Component {
 	shouldComponentUpdate(nextProps, nextState) {
 		// should update when are new props or state
 		console.log("Should component update?", nextProps, nextState);
+		if (nextState.status === 1) {
+			return false;
+		}
 		return true;
 	}
 	componentWillUpdate(nextProps, nextState) {
