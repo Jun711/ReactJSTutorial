@@ -3,6 +3,8 @@ import { render } from "react-dom";
 
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
+import { HomeEvent } from "./components/HomeEvent";
+
 console.log("It works!")
 
 class App extends React.Component {
@@ -27,6 +29,11 @@ class App extends React.Component {
                   	 	<Home name={"Max"} age={26} user={user}>
                   	 		<p>This is a paragraph!</p>
                   	 	</Home>           		
+                   	</div>
+			   	</div>
+			   	<div className="row">
+                  	 <div className="col-xs-10 col-xs-offset-1">
+                  	 	<HomeEvent name={"Max"} initialAge={26} />         		
                    	</div>
 			   	</div>
 			   	<div className="row">
