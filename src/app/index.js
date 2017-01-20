@@ -19,6 +19,8 @@ class App extends React.Component {
 	onGreet() {
 		alert("Hello!");
 	}
+	// when a function uses this then when we refer to it, we need to use bind
+
 	onChangeLinkName(newName) {
 		this.setState({
 			homeLink: newName
@@ -40,19 +42,20 @@ class App extends React.Component {
 			   	</div>
 			   	<div className="row">
                   	 <div className="col-xs-10 col-xs-offset-1">
-                  	 	<Home name={"Max"} age={26} user={user}>
-                  	 		<p>This is a paragraph!</p>
-                  	 	</Home>           		
-                   	</div>
-			   	</div>
-			   	<div className="row">
-                  	 <div className="col-xs-10 col-xs-offset-1">
                   	 	<HomeEvent 
                   	 		name={"Max"} 
                   	 		initialAge={26} 
                   	 		greet={this.onGreet}
                   	 		changeLink={this.onChangeLinkName.bind(this)}
+                  	 		initialLinkName={this.state.homeLink}
                   	 	/>         		
+                   	</div>
+			   	</div>
+			   	<div className="row">
+                  	 <div className="col-xs-10 col-xs-offset-1">
+                  	 	<Home name={"Max"} age={26} user={user}>
+                  	 		<p>This is a paragraph!</p>
+                  	 	</Home>           		
                    	</div>
 			   	</div>
 			   	<div className="row">

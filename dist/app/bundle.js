@@ -59,6 +59,10 @@
 	
 	var _Header = __webpack_require__(/*! ./components/Header */ 178);
 	
+	var _Home = __webpack_require__(/*! ./components/Home */ 179);
+	
+	var _HomeEvent = __webpack_require__(/*! ./components/HomeEvent */ 180);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -75,16 +79,39 @@
 		function App() {
 			_classCallCheck(this, App);
 	
-			return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+	
+			_this.state = {
+				homeLink: "Home"
+			};
+			return _this;
 		}
+		// component has a lot built-in methods
+		// when reactjs thinks it needs to render a component
+	
 	
 		_createClass(App, [{
+			key: "onGreet",
+			value: function onGreet() {
+				alert("Hello!");
+			}
+		}, {
+			key: "onChangeLinkName",
+			value: function onChangeLinkName(newName) {
+				this.setState({
+					homeLink: newName
+				});
+			}
+		}, {
 			key: "render",
-	
-			// component has a lot built-in methods
-			// when reactjs thinks it needs to render a component
 			value: function render() {
+				var user = {
+					name: "Anna",
+					hobbies: ["Sports", "Reading"]
+				};
 				return (// we can only return one root element, nested elements are fine, no sibling element
+					// it is not creating html code just like the following but it is telling ReactJS to sub Header
+					// with the imported component 
 					_react2.default.createElement(
 						"div",
 						{ className: "container" },
@@ -94,12 +121,23 @@
 							_react2.default.createElement(
 								"div",
 								{ className: "col-xs-10 col-xs-offset-1" },
-								_react2.default.createElement(_Header.Header, null),
-								"// ",
+								_react2.default.createElement(_Header.Header, { homeLink: this.state.homeLink })
+							)
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "row" },
+							_react2.default.createElement(
+								"div",
+								{ className: "col-xs-10 col-xs-offset-1" },
 								_react2.default.createElement(
-									"h1",
-									null,
-									"Hello!"
+									_Home.Home,
+									{ name: "Max", age: 26, user: user },
+									_react2.default.createElement(
+										"p",
+										null,
+										"This is a paragraph!"
+									)
 								)
 							)
 						),
@@ -109,19 +147,26 @@
 							_react2.default.createElement(
 								"div",
 								{ className: "col-xs-10 col-xs-offset-1" },
-								_react2.default.createElement(_Header.Home, null),
-								"// ",
+								_react2.default.createElement(_HomeEvent.HomeEvent, {
+									name: "Max",
+									initialAge: 26,
+									greet: this.onGreet,
+									changeLink: this.onChangeLinkName.bind(this)
+								})
+							)
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "row" },
+							_react2.default.createElement(
+								"div",
+								{ className: "col-xs-10 col-xs-offset-1" },
 								_react2.default.createElement(
 									"h1",
 									null,
 									"Hello!"
 								)
 							)
-						),
-						_react2.default.createElement(
-							"h1",
-							null,
-							"Hello!"
 						)
 					)
 				);
@@ -22115,6 +22160,75 @@
 	});
 	exports.Header = undefined;
 	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// stateless components
+	var Header = exports.Header = function Header(props) {
+		// props input is get by ReactJS function
+		return _react2.default.createElement(
+			"nav",
+			{ className: "navbar navbar-default" },
+			_react2.default.createElement(
+				"div",
+				{ className: "container" },
+				_react2.default.createElement(
+					"div",
+					{ className: "navbar-header" },
+					_react2.default.createElement(
+						"ul",
+						{ className: "nav navbar-nav" },
+						_react2.default.createElement(
+							"li",
+							null,
+							_react2.default.createElement(
+								"a",
+								{ href: "#" },
+								props.homeLink
+							)
+						)
+					)
+				)
+			)
+		);
+	};
+	
+	// export class Header extends React.Component {
+	// 	render() {
+	// 		return (
+	// 			<nav className="navbar navbar-default"> 
+	// 				<div className="container">
+	// 					<div className="navbar-header">
+	// 						<ul className="nav navbar-nav">
+	// 							<li><a href="#">Home</a></li>
+	// 						</ul>
+	// 					</div>
+	// 				</div>
+	// 			</nav>
+	// 		);
+	// 	}
+	// }
+	Header.propTypes = {
+		homeLink: _react2.default.PropTypes.string
+	};
+
+/***/ },
+/* 179 */
+/*!************************************!*\
+  !*** ./src/app/components/Home.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Home = undefined;
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(/*! react */ 1);
@@ -22129,49 +22243,231 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Header = exports.Header = function (_React$Component) {
-		_inherits(Header, _React$Component);
+	var Home = exports.Home = function (_React$Component) {
+		_inherits(Home, _React$Component);
 	
-		function Header() {
-			_classCallCheck(this, Header);
+		function Home() {
+			_classCallCheck(this, Home);
 	
-			return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
 		}
 	
-		_createClass(Header, [{
+		_createClass(Home, [{
 			key: "render",
 			value: function render() {
+				var content = "";
+				if (true) {
+					content = _react2.default.createElement(
+						"p",
+						null,
+						"New content!"
+					);
+				}
+				console.log(this.props); //props from React.Component
+				var text = "Some text";
 				return _react2.default.createElement(
-					"nav",
-					{ className: "navbar navbar-default" },
-					" // bootstrap class",
+					"div",
+					null,
+					_react2.default.createElement(
+						"p",
+						null,
+						text
+					),
+					_react2.default.createElement(
+						"p",
+						null,
+						"In a new Component"
+					),
+					_react2.default.createElement(
+						"p",
+						null,
+						2 + 2
+					),
+					content,
+					content.length > 5 ? "content is longer than 5" : "content is shorter than 5",
+					_react2.default.createElement(
+						"p",
+						null,
+						"Your name is ",
+						this.props.name,
+						", your age is ",
+						this.props.age
+					),
+					_react2.default.createElement(
+						"p",
+						null,
+						"User Object => Name: ",
+						this.props.user.name
+					),
 					_react2.default.createElement(
 						"div",
-						{ className: "container" },
+						null,
 						_react2.default.createElement(
-							"div",
-							{ className: "navbar-header" },
-							_react2.default.createElement(
-								"ul",
-								{ className: "nav navbar-nav" },
-								_react2.default.createElement(
+							"h4",
+							null,
+							"Hobbies"
+						),
+						_react2.default.createElement(
+							"ul",
+							null,
+							this.props.user.hobbies.map(function (hobby, i) {
+								return _react2.default.createElement(
 									"li",
-									null,
-									_react2.default.createElement(
-										"a",
-										{ href: "#" },
-										"Home"
-									)
-								)
-							)
+									{ key: i },
+									hobby
+								);
+							})
 						)
+					),
+					_react2.default.createElement("hr", null),
+					this.props.children
+				);
+			}
+		}]);
+	
+		return Home;
+	}(_react2.default.Component);
+	
+	Home.propTypes = {
+		name: _react2.default.PropTypes.string,
+		age: _react2.default.PropTypes.number,
+		user: _react2.default.PropTypes.object,
+		children: _react2.default.PropTypes.element.isRequired
+	};
+
+/***/ },
+/* 180 */
+/*!*****************************************!*\
+  !*** ./src/app/components/HomeEvent.js ***!
+  \*****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.HomeEvent = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var HomeEvent = exports.HomeEvent = function (_React$Component) {
+		_inherits(HomeEvent, _React$Component);
+	
+		function HomeEvent(props) {
+			_classCallCheck(this, HomeEvent);
+	
+			// because we inherit from React.Component 
+			// this.age = props.age;
+			var _this = _possibleConstructorReturn(this, (HomeEvent.__proto__ || Object.getPrototypeOf(HomeEvent)).call(this));
+	
+			_this.state = {
+				age: props.initialAge,
+				status: 0,
+				homeLink: "ChangedLink"
+			};
+			setTimeout(function () {
+				_this.setState({
+					status: 1
+				});
+			}, 3000);
+			return _this;
+		}
+	
+		_createClass(HomeEvent, [{
+			key: "onMakeOlder",
+			value: function onMakeOlder() {
+				// this.age += 3;
+				this.setState({
+					age: this.state.age + 3
+				}); // check if there is a need to re-render
+			}
+		}, {
+			key: "onChangeLink",
+			value: function onChangeLink() {
+				this.props.changeLink(this.state.homeLink);
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				var _this2 = this;
+	
+				var content = "";
+				if (true) {
+					content = _react2.default.createElement(
+						"p",
+						null,
+						"New content!"
+					);
+				}
+				return _react2.default.createElement(
+					"div",
+					null,
+					_react2.default.createElement("hr", null),
+					_react2.default.createElement(
+						"p",
+						null,
+						"In a new component!"
+					),
+					_react2.default.createElement(
+						"p",
+						null,
+						"Your name is ",
+						this.props.name,
+						", your age is ",
+						this.state.age
+					),
+					_react2.default.createElement(
+						"p",
+						null,
+						"Status: ",
+						this.state.status
+					),
+					_react2.default.createElement("hr", null),
+					_react2.default.createElement(
+						"button",
+						{ onClick: function onClick() {
+								return _this2.onMakeOlder;
+							}, className: "btn btn-primary" },
+						"Make me older!"
+					),
+					_react2.default.createElement("hr", null),
+					_react2.default.createElement(
+						"button",
+						{ onClick: this.props.greet, className: "btn btn-primary" },
+						"Greet"
+					),
+					_react2.default.createElement("hr", null),
+					_react2.default.createElement("input", { type: "text" }),
+					_react2.default.createElement(
+						"button",
+						{ onClick: this.onChangeLink.bind(this), className: "btn btn-primary" },
+						"Change Header Link"
 					)
 				);
 			}
 		}]);
 	
-		return Header;
+		return HomeEvent;
 	}(_react2.default.Component);
+	
+	HomeEvent.propTypes = {
+		name: _react2.default.PropTypes.string,
+		initialAge: _react2.default.PropTypes.number,
+		greet: _react2.default.PropTypes.func
+	};
 
 /***/ }
 /******/ ]);

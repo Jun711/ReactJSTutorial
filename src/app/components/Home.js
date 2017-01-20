@@ -10,8 +10,9 @@ export class Home extends React.Component {
 		var text = "Some text";
 		return (
 			<div>
+				<hr />
 				<p>{text}</p>
-				<p>In a new Component</p>
+				<p>In a new Component!</p>
 				<p>{ 2 + 2 }</p>
 				{content}
 				{ content.length > 5 ? "content is longer than 5" : "content is shorter than 5" }
