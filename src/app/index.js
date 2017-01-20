@@ -8,8 +8,22 @@ import { HomeEvent } from "./components/HomeEvent";
 console.log("It works!")
 
 class App extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			homeLink: "Home"
+		};
+	}
 	// component has a lot built-in methods
 	// when reactjs thinks it needs to render a component
+	onGreet() {
+		alert("Hello!");
+	}
+	onChangeLinkName(newName) {
+		this.setState({
+			homeLink: newName
+		});
+	}
 	render() {
 		var user = {
 			name: "Anna",
@@ -21,7 +35,7 @@ class App extends React.Component {
 			<div className="container">
 			   	<div className="row">
                   	 <div className="col-xs-10 col-xs-offset-1">
-                  	 	<Header />
+                  	 	<Header homeLink={this.state.homeLink}/>
                    	</div>
 			   	</div>
 			   	<div className="row">
@@ -33,7 +47,12 @@ class App extends React.Component {
 			   	</div>
 			   	<div className="row">
                   	 <div className="col-xs-10 col-xs-offset-1">
-                  	 	<HomeEvent name={"Max"} initialAge={26} />         		
+                  	 	<HomeEvent 
+                  	 		name={"Max"} 
+                  	 		initialAge={26} 
+                  	 		greet={this.onGreet}
+                  	 		changeLink={this.onChangeLinkName.bind(this)}
+                  	 	/>         		
                    	</div>
 			   	</div>
 			   	<div className="row">
