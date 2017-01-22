@@ -30,12 +30,11 @@
 
 // render(<App />, window.document.getElementById('app'));
 
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 
 const initialState = {
     result: 1,
-    lastValues: [],
-    userName: "Max"
+    lastValues: []
 };
 
 // handle multiple actions
@@ -43,7 +42,10 @@ const initialState = {
 // default value in the case when no state is set
 // when we first create our store, there is no state, 
 // and, thus, the initialState is used to initialize
-const reducer = (state = initialState, action) => {
+const mathReducer = (state = {
+    result: 1,
+    lastValues: []
+}, action) => {
     switch (action.type) {
         case "ADD":
             state = {
@@ -75,10 +77,37 @@ const reducer = (state = initialState, action) => {
     return state;
 };
 
+const userReducer = (state = {
+    name: "Max",
+    age: 27
+}, action) => {
+    switch (action.type) {
+        case "SET_NAME":
+            state = {
+                ...state, // result: state.result
+                          // lastValues: []
+                name: action.payload
+            };
+            //state.result += action.payload;
+            //state.lastValues.push(action.payload)
+            break;
+        case "SET_AGE":
+            state = {
+                ...state, // result: state.result
+                          // lastValues: []
+                age: action.payload
+            };
+            break;
+    }
+    return state;
+};
+
 // first argument is the reducer(s)
 // the second argument is the initial application state
 // this reducer will give the store a new state
-const store = createStore(reducer);
+// const store = createStore(combineReducers({mathReducer: mathReducer, userReducer: userReducer}));
+// create a store that has multiple reducers
+const store = createStore(combineReducers({mathReducer, userReducer}));
 
 store.subscribe(() => {
     console.log("Store updated!", store.getState());
@@ -98,5 +127,13 @@ store.dispatch({
 store.dispatch({
     type: "MULTIPLY",
     payload: 100
+});
+store.dispatch({
+    type: "SET_NAME",
+    payload: "Adam"
+});
+store.dispatch({
+    type: "SET_AGE",
+    payload: 21
 });
 
