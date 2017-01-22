@@ -1,37 +1,10 @@
-// import React from "react";
-// import {render} from "react-dom";
-
-// import { User } from './components/UserRedux';
-// import { Main } from './components/MainRedux';
-
-// class App extends React.Component {
-//     constructor() {
-//         super();
-//         this.state = {
-//             username: "Max"
-//         };
-//     }
-
-//     changeUsername(newName) {
-//         this.setState({
-//             username: newName
-//         });
-//     }
-
-//     render() {
-//         return (
-//             <div className="container">
-//                 <Main changeUsername={this.changeUsername.bind(this)}/>
-//                 <User username={this.state.username}/>
-//             </div>
-//         );
-//     }
-// }
-
-// render(<App />, window.document.getElementById('app'));
-
+import React from "react";
+import {render} from "react-dom";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import logger from "redux-logger";
+import {Provider} from "react-redux";
+
+import App from "./containers/AppRedux"; // import a wired-up component by connect
 
 const initialState = {
     result: 1,
@@ -126,28 +99,35 @@ const store = createStore(
 store.subscribe(() => {
     console.log("Store updated!", store.getState());
 });
-// dispatch action to a reducer
-// other packages that enhance Redux usually use payload
-store.dispatch({
-    type: "ADD",
-    payload: 10
-});
+// // dispatch action to a reducer
+// // other packages that enhance Redux usually use payload
+// store.dispatch({
+//     type: "ADD",
+//     payload: 10
+// });
 
-store.dispatch({
-    type: "SUBTRACT",
-    payload: 5
-});
+// store.dispatch({
+//     type: "SUBTRACT",
+//     payload: 5
+// });
 
-store.dispatch({
-    type: "MULTIPLY",
-    payload: 100
-});
-store.dispatch({
-    type: "SET_NAME",
-    payload: "Adam"
-});
-store.dispatch({
-    type: "SET_AGE",
-    payload: 21
-});
+// store.dispatch({
+//     type: "MULTIPLY",
+//     payload: 100
+// });
+// store.dispatch({
+//     type: "SET_NAME",
+//     payload: "Adam"
+// });
+// store.dispatch({
+//     type: "SET_AGE",
+//     payload: 21
+// });
+
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>, 
+    window.document.getElementById('app'));
+
 
