@@ -9,7 +9,7 @@ var SRC_DIR = path.resolve(__dirname, "src") // untranspiled source code
 
 var config = {
 	// entry to transpiling and bundling journey, bundling all the dependencies and inputs
-	entry: SRC_DIR + "/app/indexR.js", //root file that starts the application
+	entry: SRC_DIR + "/app/indexRedux.js", //root file that starts the application
     output: {
     	path: DIST_DIR + "/app", // target directory
     	filename: "bundle.js",
