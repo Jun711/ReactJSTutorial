@@ -49,27 +49,7 @@
 
 	"use strict";
 	
-	var _redux = __webpack_require__(/*! redux */ 1);
-	
-	// handle multiple actions
-	// reducer must return a state
-	var reducer = function reducer(state, action) {
-	    switch (action.type) {
-	        case "ADD":
-	            state = state + action.payload;
-	            break;
-	        case "SUBTRACT":
-	            break;
-	        case "MULTIPLY":
-	            break;
-	    }
-	    return state;
-	};
-	
-	// first argument is the
-	// the second argument is 
-	// this reducer will give the store a new state
-	// import React from "react";
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; // import React from "react";
 	// import {render} from "react-dom";
 	
 	// import { User } from './components/UserRedux';
@@ -101,9 +81,99 @@
 	
 	// render(<App />, window.document.getElementById('app'));
 	
-	var store = (0, _redux.createStore)(reducer, 1);
+	var _redux = __webpack_require__(/*! redux */ 1);
 	
-	stoare.subscribe(function () {
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	var initialState = {
+	    result: 1,
+	    lastValues: []
+	};
+	
+	// handle multiple actions
+	// reducer must return a state
+	// default value in the case when no state is set
+	// when we first create our store, there is no state, 
+	// and, thus, the initialState is used to initialize
+	var mathReducer = function mathReducer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	        result: 1,
+	        lastValues: []
+	    };
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case "ADD":
+	            state = _extends({}, state, { // result: state.result
+	                // lastValues: []
+	                result: state.result + action.payload, // this will override the result's value
+	                lastValues: [].concat(_toConsumableArray(state.lastValues), [action.payload])
+	            });
+	            //state.result += action.payload;
+	            //state.lastValues.push(action.payload)
+	            break;
+	        case "SUBTRACT":
+	            state = _extends({}, state, { // result: state.result
+	                // lastValues: []
+	                result: state.result - action.payload, // this will override the result's value
+	                lastValues: [].concat(_toConsumableArray(state.lastValues), [action.payload])
+	            });
+	            break;
+	        case "MULTIPLY":
+	            state = _extends({}, state, { // result: state.result
+	                // lastValues: []
+	                result: state.result * action.payload, // this will override the result's value
+	                lastValues: [].concat(_toConsumableArray(state.lastValues), [action.payload])
+	            });
+	            break;
+	    }
+	    return state;
+	};
+	
+	var userReducer = function userReducer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	        name: "Max",
+	        age: 27
+	    };
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case "SET_NAME":
+	            state = _extends({}, state, { // result: state.result
+	                // lastValues: []
+	                name: action.payload
+	            });
+	            //state.result += action.payload;
+	            //state.lastValues.push(action.payload)
+	            break;
+	        case "SET_AGE":
+	            state = _extends({}, state, { // result: state.result
+	                // lastValues: []
+	                age: action.payload
+	            });
+	            break;
+	    }
+	    return state;
+	};
+	
+	// currying
+	var myLogger = function myLogger(store) {
+	    return function (next) {
+	        return function (action) {
+	            console.log("Logged Action: ", action);
+	            next(action); // it is used to propagate the action further
+	        };
+	    };
+	};
+	
+	// first argument is the reducer(s)
+	// the second argument is the initial application state
+	// this reducer will give the store a new state
+	// const store = createStore(combineReducers({mathReducer: mathReducer, userReducer: userReducer}));
+	// create a store that has multiple reducers
+	var store = (0, _redux.createStore)((0, _redux.combineReducers)({ mathReducer: mathReducer, userReducer: userReducer }), {}, (0, _redux.applyMiddleware)(myLogger));
+	
+	store.subscribe(function () {
 	    console.log("Store updated!", store.getState());
 	});
 	// dispatch action to a reducer
@@ -111,6 +181,24 @@
 	store.dispatch({
 	    type: "ADD",
 	    payload: 10
+	});
+	
+	store.dispatch({
+	    type: "SUBTRACT",
+	    payload: 5
+	});
+	
+	store.dispatch({
+	    type: "MULTIPLY",
+	    payload: 100
+	});
+	store.dispatch({
+	    type: "SET_NAME",
+	    payload: "Adam"
+	});
+	store.dispatch({
+	    type: "SET_AGE",
+	    payload: 21
 	});
 
 /***/ },
