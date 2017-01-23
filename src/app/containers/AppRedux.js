@@ -1,8 +1,10 @@
 import React from "react";
 import {connect} from "react-redux"
 
-import { User } from '../components/UserRedux';
-import { Main } from '../components/MainRedux';
+import { User } from "../components/UserRedux";
+import { Main } from "../components/MainRedux";
+import {} from "../actions/mathActions";
+import { setName } from "../actions/userActions";
 
 class App extends React.Component {
     // constructor() {
@@ -41,8 +43,8 @@ class App extends React.Component {
 // redux will populate the component's props so we can access the value via props
 const mapStateToProps = (state) => {
 	return {
-		user: state.userReducer,
-		math: state.mathReducer
+		user: state.user,
+		math: state.math
 	};
 };
 
@@ -50,10 +52,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setName: (name) => {
-			dispatch({
-				type: "SET_NAME",
-				payload: name
-			});
+			dispatch(setName(name));
 		}
 	};
 };
